@@ -1,0 +1,15 @@
+# Java
+*.class
+*.log
+bin/
+out/
+
+# IDE
+.vscode/
+.idea/
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
