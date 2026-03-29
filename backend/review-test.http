@@ -1,0 +1,10 @@
+### 리뷰 작성 테스트
+POST http://127.0.0.1:8080/api/reviews
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "placeId": 100,
+  "content": "여기 스터디하기 진짜 좋아요! 와이파이 엄청 빠름.",
+  "rating": 5
+}
