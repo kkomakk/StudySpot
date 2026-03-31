@@ -1,3 +1,30 @@
 spring:
-  application:
-    name: backend
+  datasource:
+    url: jdbc:h2:mem:studyspot
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: your-very-long-secret-key-that-is-at-least-32-bytes-studyspot
+  access-token-expiration: 3600000
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
