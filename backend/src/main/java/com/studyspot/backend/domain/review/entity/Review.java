@@ -34,4 +34,10 @@ public class Review {
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    // 리뷰 수정 메서드
+    public void update(String content, Integer rating) {
+        this.content = content;
+        this.rating = rating;
+    }
 }

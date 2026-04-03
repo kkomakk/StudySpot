@@ -1,10 +1,49 @@
-### 리뷰 작성 테스트
+### 리뷰 작성 테스트 (POST)
 POST http://127.0.0.1:8080/api/reviews
+Content-Type: application/json
+Authorization: Bearer (여기에_진짜_로그인_토큰을_넣어야함)
+
+{
+  "content": "이제 로그인했으니까 글 써지겠지?",
+  "rating": 5
+}
+### 리뷰 작성 테스트 (POST) - 로그인 완료!
+POST http://127.0.0.1:8080/api/reviews
+Content-Type: application/json
+Authorization: Bearer fake-jwt-token-user-1
+
+{
+  "content": "신분증 보여주니까 진짜 통과되네! 게시판 만들기 꿀잼😎",
+  "rating": 5
+}
+
+### 리뷰 수정 테스트 (PUT)
+PUT http://127.0.0.1:8080/api/reviews/1
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "placeId": 100,
-  "content": "여기 스터디하기 진짜 좋아요! 와이파이 엄청 빠름.",
-  "rating": 5
+  "content": "수정된 리뷰 내용입니다! 와이파이 말고 콘센트도 많아요.",
+  "rating": 4
+}
+
+### 리뷰 삭제 테스트 (DELETE)
+DELETE http://127.0.0.1:8080/api/reviews/1
+
+### 회원가입 테스트 (POST)
+POST http://127.0.0.1:8080/api/users/signup
+Content-Type: application/json
+
+{
+  "email": "test@naver.com",
+  "password": "password123!",
+  "nickname": "코딩천재"
+}
+
+### 로그인 테스트 (POST)
+POST http://127.0.0.1:8080/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test@naver.com",
+  "password": "password123!"
 }
