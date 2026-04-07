@@ -2,9 +2,6 @@ package com.studyspot.backend.global.exception;
 
 import lombok.Getter;
 
-/**
- * 서비스 로직에서 사용할 커스텀 예외
- */
 @Getter
 public class CustomException extends RuntimeException {
 
@@ -12,6 +9,12 @@ public class CustomException extends RuntimeException {
 
     public CustomException(ErrorCode errorCode) {
         super(errorCode.getMessage());
+        this.errorCode = errorCode;
+    }
+
+    // 에러의 원인 넘겨주는 함수
+    public CustomException(ErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
         this.errorCode = errorCode;
     }
 }

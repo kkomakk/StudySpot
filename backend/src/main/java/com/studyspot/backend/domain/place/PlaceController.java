@@ -6,6 +6,7 @@ import com.studyspot.backend.domain.place.dto.PlaceSearchCondition;
 import com.studyspot.backend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.studyspot.backend.external.placeapi.dto.ExternalPlaceDto;
 
 import java.util.List;
 
@@ -13,11 +14,12 @@ import java.util.List;
  * StudySpot 장소 API 컨트롤러
  */
 @RestController
-@RequiredArgsConstructor // 중요: 이 어노테이션이 있어야 placeService 주입이 에러 없이 작동합니다.
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/places")
 public class PlaceController {
 
-    private final PlaceService placeService; // 중요: private final이 붙어있어야 합니다.
+    private final PlaceService placeService;
 
     /**
      * 1. 전체 목록 조회
@@ -58,4 +60,19 @@ public class PlaceController {
     public ApiResponse<List<PlaceResponse>> searchByCondition(PlaceSearchCondition condition) {
         return ApiResponse.ok("조건 검색 성공", placeService.searchByCondition(condition));
     }
+
+    //프론트엔드  '내 위치 주변 검색' 요청을 받는 API
+    @GetMapping("/nearby")
+    public ApiResponse<List<ExternalPlaceDto>> getNearbyPlaces(
+            @RequestParam(defaultValue = "스터디룸") String keyword,
+            @RequestParam Double lat,
+            @RequestParam Double lng,
+            @RequestParam(defaultValue = "2000") int radius
+    ) {
+        return ApiResponse.ok(
+                "주변 스터디룸 검색 성공",
+                placeService.getNearbyPlacesFromKakao(keyword, lat, lng, radius)
+        );
+    }
+
 }

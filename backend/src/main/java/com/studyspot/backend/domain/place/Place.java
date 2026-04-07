@@ -21,6 +21,10 @@ public class Place extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //카카오 장소 ID 저장용 필드
+    @Column(unique = true)
+    private String externalId;
+
     @Column(nullable = false, length = 100)
     private String name;
 
@@ -46,10 +50,11 @@ public class Place extends BaseEntity {
     private List<String> tags = new ArrayList<>();
 
     @Builder
-    public Place(String name, String address, String category, Double latitude, Double longitude, List<String> tags) {
+    public Place(String externalId, String name, String address, String category, Double latitude, Double longitude, List<String> tags) {
         Assert.hasText(name, "장소명은 필수입니다.");
         Assert.hasText(address, "주소는 필수입니다.");
 
+        this.externalId = externalId; // 추가
         this.name = name;
         this.address = address;
         this.category = category;

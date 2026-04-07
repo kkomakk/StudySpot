@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
+import com.studyspot.backend.external.placeapi.PlaceApiClient;
+import com.studyspot.backend.external.placeapi.dto.ExternalPlaceDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class PlaceService {
 
     private final PlaceRepository placeRepository;
+    private final PlaceApiClient placeApiClient;
 
     /**
      * 1. 전체 목록 조회
@@ -88,5 +90,10 @@ public class PlaceService {
     private boolean filterByCongestion(Place place, Integer maxCongestion) {
         if (maxCongestion == null) return true;
         return place.getCurrentCongestion() <= maxCongestion;
+    }
+
+    //카카오 API를 통해 내 주변 장소 검색
+    public List<ExternalPlaceDto> getNearbyPlacesFromKakao(String keyword, Double lat, Double lng, int radius) {
+        return placeApiClient.searchPlacesByKeyword(keyword, lat, lng, radius);
     }
 }
