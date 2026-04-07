@@ -19,7 +19,7 @@ spring:
         format_sql: true
 
 jwt:
-  secret: your-very-long-secret-key-that-is-at-least-32-bytes-studyspot
+  secret: ${JWT_SECRET:your-very-long-secret-key-that-is-at-least-32-bytes-studyspot}
   access-token-expiration: 3600000
 
 server:
@@ -28,3 +28,6 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+kakao:
+  rest-api-key: ${KAKAO_REST_API_KEY}

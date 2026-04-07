@@ -24,7 +24,10 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
 
     // --- 장소 관련
-    PLACE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 스터디 스팟을 찾을 수 없습니다.");
+    PLACE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 스터디 스팟을 찾을 수 없습니다."),
+
+    // --- 외부 API 관련 ---
+    EXTERNAL_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "외부 API 호출 중 에러가 발생했습니다.");
 
     private final HttpStatus status;
     private final String message;

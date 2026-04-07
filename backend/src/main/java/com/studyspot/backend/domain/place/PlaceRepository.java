@@ -2,8 +2,12 @@ package com.studyspot.backend.domain.place;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
+
+    Optional<Place> findByExternalId(String externalId);
+
     // 카테고리별 장소 검색
     List<Place> findAllByCategory(String category);
 

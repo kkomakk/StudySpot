@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 public class PlaceResponse {
     private final Long id;
+    private final String externalId;
     private final String name;
     private final String address;
     private final Double averageRating;
@@ -16,6 +17,7 @@ public class PlaceResponse {
 
     public PlaceResponse(Place place) {
         this.id = place.getId();
+        this.externalId = place.getExternalId();
         this.name = place.getName();
         this.address = place.getAddress();
         this.averageRating = place.getAverageRating();
