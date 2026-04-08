@@ -1,31 +1,21 @@
 package com.studyspot.backend.global.response;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-/**
- * 모든 API 응답을 동일한 형식으로 내려주기 위한 공통 응답 객체
- */
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class ApiResponse<T> {
+    private final String message;
+    private final T data;
 
-    private boolean success;
-    private String message;
-    private T data;
-
+    // 데이터가 있는 성공 응답
     public static <T> ApiResponse<T> ok(String message, T data) {
-        return new ApiResponse<>(true, message, data);
+        return new ApiResponse<>(message, data);
     }
 
-    public static ApiResponse<Void> ok(String message) {
-        return new ApiResponse<>(true, message, null);
-    }
-
-    public static ApiResponse<Void> fail(String message) {
-        return new ApiResponse<>(false, message, null);
+    // 데이터가 없는 성공 응답 (메시지만 띄울 때)
+    public static <T> ApiResponse<T> ok(String message) {
+        return new ApiResponse<>(message, null);
     }
 }

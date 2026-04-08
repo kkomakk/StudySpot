@@ -1,37 +1,30 @@
 package com.studyspot.backend.domain.review.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "reviews")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO: 나중에 User 엔티티와 연결
-    @Column(name = "user_id")
     private Long userId;
+    private Long placeId; 
 
-    // TODO: 나중에 Place 엔티티와 연결
-    @Column(name = "place_id")
-    private Long placeId;
-
-    @Column(columnDefinition = "TEXT")
     private String content;
+    private int rating;
 
-    private Integer rating;
-
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Builder
+    public Review(Long userId, Long placeId, String content, int rating) {
+        this.userId = userId;
+        this.placeId = placeId;
+        this.content = content;
+        this.rating = rating;
+    }
 }
