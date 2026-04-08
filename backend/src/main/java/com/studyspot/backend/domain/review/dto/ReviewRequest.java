@@ -1,13 +1,13 @@
 package com.studyspot.backend.domain.review.dto;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
-public class ReviewRequestDto {
+@NoArgsConstructor
+public class ReviewRequest {
     private Long userId;
     private Long placeId;
-    private String content;
     private Integer rating;
+    private String content;
 }
