@@ -13,7 +13,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     @GetMapping("/{userId}")
-    public List<FavoriteResponse> getFavorites(@PathVariable Long userId) {
+    public List<FavoriteResponse> getUserFavorites(@PathVariable Long userId) {
         return favoriteService.getUserFavorites(userId);
     }
 }

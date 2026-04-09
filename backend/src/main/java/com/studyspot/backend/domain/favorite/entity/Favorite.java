@@ -13,5 +13,5 @@ public class Favorite {
     private Long id;
 
     private Long userId;
-    private Long spotId; // 즐겨찾기한 장소 ID
+    private Long spotId;
 }
