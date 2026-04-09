@@ -33,8 +33,15 @@ public class PlaceController {
      * 2. 상세 조회
      */
     @GetMapping("/{id}")
-    public ApiResponse<PlaceDetailResponse> getPlaceDetail(@PathVariable Long id) {
-        return ApiResponse.ok("장소 상세 조회 성공", placeService.getPlaceDetail(id));
+    public ApiResponse<PlaceDetailResponse> getPlaceDetail(
+
+            @PathVariable String id,
+            @RequestParam String name,
+            @RequestParam Double lat,
+            @RequestParam(name = "lng") Double lon
+    ) {
+        System.out.println("컨트롤러로부터 받은 데이터 -> 이름: " + name + ", 위도: " + lat + ", 경도: " + lon);
+        return ApiResponse.ok("장소 상세 조회 성공", placeService.getPlaceDetail(id, name, lat, lon));
     }
 
     /**
@@ -61,7 +68,7 @@ public class PlaceController {
         return ApiResponse.ok("조건 검색 성공", placeService.searchByCondition(condition));
     }
 
-    //프론트엔드  '내 위치 주변 검색' 요청을 받는 API
+    // 내 위치 주변 검색 요청을 받는 API
     @GetMapping("/nearby")
     public ApiResponse<List<ExternalPlaceDto>> getNearbyPlaces(
             @RequestParam(defaultValue = "스터디룸") String keyword,

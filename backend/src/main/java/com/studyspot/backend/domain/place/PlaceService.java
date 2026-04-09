@@ -34,11 +34,42 @@ public class PlaceService {
     /**
      * 2. 상세 조회
      */
-    public PlaceDetailResponse getPlaceDetail(Long id) {
-        Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.PLACE_NOT_FOUND));
-        return new PlaceDetailResponse(place);
+    // PlaceService.java 수정
+
+    // PlaceService.java
+
+    @Transactional
+    public PlaceDetailResponse getPlaceDetail(String externalId, String name, Double lat, Double lon) {
+        // 1. 우리 DB(MySQL)에 이미 있는지 확인
+        return placeRepository.findByExternalId(externalId)
+                .map(PlaceDetailResponse::new)
+                .orElseGet(() -> {
+                    // 2. DB에 없다면 프론트에서 준 '위치'와 '이름'으로 카카오 지도에서 검색
+                    List<ExternalPlaceDto> searchResults = placeApiClient.searchPlacesByKeyword(name, lat, lon, 2000);
+
+                    if (searchResults.isEmpty()) {
+                        //검색 결과가 없으면 임시 저장 로직 실행
+                        return saveTemporaryPlace(externalId, name, lat, lon);
+                    }
+
+                    ExternalPlaceDto ext = searchResults.get(0);
+
+                    // 3. 카카오에서 찾은 정보를 MySQL에 저장
+                    Place savedPlace = placeRepository.save(Place.builder()
+                            .externalId(externalId)
+                            .name(ext.name())
+                            .address(ext.roadAddress())
+                            .latitude(ext.latitude())
+                            .longitude(ext.longitude())
+                            .imageUrl("https://images.unsplash.com/photo-1497366216548-37526070297c?w=800")
+                            .averageRating(4.5)
+                            .currentCongestion(0)
+                            .build());
+
+                    return new PlaceDetailResponse(savedPlace);
+                });
     }
+
 
     /**
      * 3. 카테고리별 필터링
@@ -69,6 +100,19 @@ public class PlaceService {
                 .filter(place -> filterByCongestion(place, condition.getMaxCongestion()))
                 .map(PlaceResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    private PlaceDetailResponse saveTemporaryPlace(String externalId, String name, Double lat, Double lon) {
+        Place newPlace = Place.builder()
+                .externalId(externalId)
+                .name(name)
+                .address("상세 주소 정보를 찾을 수 없습니다.")
+                .latitude(lat)
+                .longitude(lon)
+                .imageUrl("https://images.unsplash.com/photo-1497366216548-37526070297c?w=800")
+                .build();
+
+        return new PlaceDetailResponse(placeRepository.save(newPlace));
     }
 
     // --- 내부 필터링 메서드 ---

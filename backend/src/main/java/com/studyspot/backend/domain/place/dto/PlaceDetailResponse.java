@@ -16,6 +16,7 @@ public class PlaceDetailResponse {
     private final Double averageRating;
     private final Integer currentCongestion;
     private final List<String> tags;
+    private final String imageUrl;
 
     public PlaceDetailResponse(Place place) {
         this.id = place.getId();
@@ -27,5 +28,6 @@ public class PlaceDetailResponse {
         this.averageRating = place.getAverageRating();
         this.currentCongestion = place.getCurrentCongestion();
         this.tags = place.getTags();
+        this.imageUrl = place.getImageUrl();
     }
 }

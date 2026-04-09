@@ -2,10 +2,7 @@ package com.studyspot.backend.domain.place;
 
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -13,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "places")
 public class Place extends BaseEntity {
@@ -21,7 +20,6 @@ public class Place extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //카카오 장소 ID 저장용 필드
     @Column(unique = true)
     private String externalId;
 
@@ -32,6 +30,9 @@ public class Place extends BaseEntity {
     private String address;
 
     private String category;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     private Double latitude;
     private Double longitude;
