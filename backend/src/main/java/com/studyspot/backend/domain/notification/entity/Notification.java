@@ -3,6 +3,7 @@ package com.studyspot.backend.domain.notification.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -12,7 +13,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String message;
     private Long userId;
-    private String content;
-    private boolean isRead;
+    private LocalDateTime createdAt;
 }

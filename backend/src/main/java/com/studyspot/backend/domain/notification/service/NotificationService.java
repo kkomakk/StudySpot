@@ -1,6 +1,7 @@
 package com.studyspot.backend.domain.notification.service;
 
 import com.studyspot.backend.domain.notification.dto.NotificationResponse;
+import com.studyspot.backend.domain.notification.entity.Notification;
 import com.studyspot.backend.domain.notification.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
 
     public List<NotificationResponse> getNotifications(Long userId) {
-        return notificationRepository.findByUserId(userId).stream()
-                .map(n -> new NotificationResponse(n.getId(), n.getContent(), n.isRead()))
+        return notificationRepository.findByUserIdOrderByIdDesc(userId).stream()
+                .map(n -> new NotificationResponse(n.getId(), n.getMessage(), n.getCreatedAt()))
                 .collect(Collectors.toList());
     }
 }
