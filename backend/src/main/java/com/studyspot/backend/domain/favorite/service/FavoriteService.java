@@ -13,6 +13,7 @@ public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
 
     public List<FavoriteResponse> getUserFavorites(Long userId) {
+        // 유저가 즐겨찾기한 장소(Spot) 목록 조회
         return favoriteRepository.findByUserId(userId).stream()
                 .map(f -> new FavoriteResponse(f.getId(), f.getSpotId()))
                 .collect(Collectors.toList());
