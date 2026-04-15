@@ -1,5 +1,8 @@
 package com.studyspot.backend.domain.review.entity;
 
+import com.studyspot.backend.domain.place.Place;
+import com.studyspot.backend.domain.user.User;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,13 +22,15 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // TODO: 나중에 User 엔티티와 연결
-    @Column(name = "user_id")
-    private Long userId;
 
-    // TODO: 나중에 Place 엔티티와 연결
-    @Column(name = "place_id")
-    private Long placeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 
     @Column(columnDefinition = "TEXT")
     private String content;
