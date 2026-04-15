@@ -1,8 +1,16 @@
 package com.studyspot.backend.external.placeapi.dto;
 
 public record ExternalPlaceDto(
-        String externalId, String name, String address, String roadAddress,
-        String phone, Double latitude, Double longitude, String placeUrl, Double distance
+        String externalId,
+        String name,
+        String address,
+        String roadAddress,
+        String phone,
+        Double latitude,
+        Double longitude,
+        String placeUrl,
+        Double distance,
+        String category
 ) {
     public static ExternalPlaceDto fromKakaoDocument(KakaoSearchResponse.Document doc) {
         return new ExternalPlaceDto(
@@ -14,7 +22,8 @@ public record ExternalPlaceDto(
                 Double.parseDouble(doc.y()),
                 Double.parseDouble(doc.x()),
                 doc.placeUrl(),
-                (doc.distance() != null && !doc.distance().isEmpty()) ? Double.parseDouble(doc.distance()) : 0.0
+                (doc.distance() != null && !doc.distance().isEmpty()) ? Double.parseDouble(doc.distance()) : 0.0,
+                doc.categoryName()
         );
     }
 }
