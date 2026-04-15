@@ -6,7 +6,6 @@ spring:
     username: root
     password: 1234
 
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,6 +14,48 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+
+  # --- 이메일 발송 설정 ---
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: std123spot@gmail.com
+    password: uwge mpqc nkjo moml
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 5000
+
+  # --- 소셜 로그인 설정 ---
+  security:
+    oauth2:
+      client:
+        registration:
+          # 1. 카카오 설정
+          kakao:
+            client-id: ${KAKAO_REST_API_KEY:7c25e5e3a99358708c0e4a60ce653761}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
+            client-name: Kakao
+
+          # 2. 구글 설정
+          google:
+            client-id: 545267244148-8o63a1k1bri1sr4te1fkle3cbs0nk31d.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - email
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 
 jwt:
   secret: ${JWT_SECRET:your-very-long-secret-key-that-is-at-least-32-bytes-studyspot}
@@ -28,4 +69,4 @@ server:
       force: true
 
 kakao:
-  rest-api-key: ${KAKAO_REST_API_KEY}
+  rest-api-key: ${KAKAO_REST_API_KEY:7c25e5e3a99358708c0e4a60ce653761}
