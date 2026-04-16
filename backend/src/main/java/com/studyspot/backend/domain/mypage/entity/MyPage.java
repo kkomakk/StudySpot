@@ -1,4 +1,4 @@
-package com.studyspot.backend.domain.admin.entity; // 패키지명 주의! 만약 에러나면 Alt+Enter로 수정하세요.
+package com.studyspot.backend.domain.mypage.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,5 +13,5 @@ public class MyPage {
     private Long id;
 
     private Long userId;
-    private String bio; //예시입니다.
+    private String bio;
 }
