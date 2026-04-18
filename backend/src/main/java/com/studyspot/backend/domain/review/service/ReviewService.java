@@ -24,15 +24,11 @@ public class ReviewService {
     // 1. 리뷰 저장하기
     @Transactional
     public Review createReview(ReviewRequestDto dto) {
-
-
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다. ID: " + dto.getUserId()));
 
-
         Place place = placeRepository.findById(dto.getPlaceId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장소입니다. ID: " + dto.getPlaceId()));
-
 
         Review review = Review.builder()
                 .user(user)
@@ -41,9 +37,12 @@ public class ReviewService {
                 .rating(dto.getRating())
                 .build();
 
-        return reviewRepository.save(review);
-    }
+        Review savedReview = reviewRepository.save(review);
 
+        place.updateStatistics(dto.getRating());
+
+        return savedReview;
+    }
 
     @Transactional(readOnly = true)
     public List<Review> getAllReviews() {

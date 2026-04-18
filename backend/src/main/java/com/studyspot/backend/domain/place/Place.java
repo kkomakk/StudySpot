@@ -76,11 +76,15 @@ public class Place extends BaseEntity {
         if (tags != null) this.tags = tags;
     }
 
-    public void updateCongestion(Integer congestion) {
-        this.currentCongestion = congestion;
+    public void updateStatistics(Integer newRating) {
+        double totalRating = (this.averageRating * this.reviewCount) + newRating;
+
+        this.reviewCount++;
+
+        this.averageRating = Math.round((totalRating / this.reviewCount) * 10.0) / 10.0;
     }
 
-    public void updateAverageRating(Double newAverage) {
-        this.averageRating = newAverage;
+    public void updateCongestion(Integer congestion) {
+        this.currentCongestion = congestion;
     }
 }
