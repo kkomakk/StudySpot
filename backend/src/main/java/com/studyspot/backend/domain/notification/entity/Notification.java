@@ -1,6 +1,5 @@
-package com.studyspot.backend.domain.favorite.entity;
+package com.studyspot.backend.domain.notification.entity;
 
-import com.studyspot.backend.domain.place.Place;
 import com.studyspot.backend.domain.user.User;
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
@@ -11,13 +10,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(
-        name = "favorites",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"user_id", "place_id"})
-        }
-)
-public class Favorite extends BaseEntity {
+@Table(name = "notifications")
+public class Notification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +21,14 @@ public class Favorite extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id", nullable = false)
-    private Place place;
+    @Column(nullable = false, length = 500)
+    private String message;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean isRead = false;
+
+    public void markAsRead() {
+        this.isRead = true;
+    }
 }
