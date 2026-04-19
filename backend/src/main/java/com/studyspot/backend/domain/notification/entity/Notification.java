@@ -19,16 +19,15 @@ public class Notification extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // 알림 수신자
+    private User user;
 
     @Column(nullable = false, length = 500)
-    private String message; // 알림 메시지
+    private String message;
 
     @Builder.Default
     @Column(nullable = false)
-    private boolean isRead = false; // 읽음 상태 여부
+    private boolean isRead = false;
 
-    // 비즈니스 로직: 알림 읽음 처리
     public void markAsRead() {
         this.isRead = true;
     }
