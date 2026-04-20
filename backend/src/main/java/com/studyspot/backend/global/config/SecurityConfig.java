@@ -50,6 +50,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/places/**").permitAll()
+                        .requestMatchers("/api/favorites/**").permitAll()
+                        .requestMatchers("/api/reviews/**").permitAll()
+
+                        .requestMatchers("/api/mypage/**").permitAll()
                         .requestMatchers("/", "/login/**", "/oauth2/**", "/favicon.ico").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

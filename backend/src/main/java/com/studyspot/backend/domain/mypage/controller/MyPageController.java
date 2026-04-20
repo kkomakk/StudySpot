@@ -1,15 +1,19 @@
 package com.studyspot.backend.domain.mypage.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.studyspot.backend.domain.mypage.dto.MyPageResponse;
+import com.studyspot.backend.domain.mypage.service.MyPageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/mypage")
+@RequestMapping("/api/mypage")
+@RequiredArgsConstructor
 public class MyPageController {
+    private final MyPageService myPageService;
 
-    @GetMapping
-    public String getMyPage() {
-        return "MyPage Data";
+    @GetMapping("/{userId}")
+    public ResponseEntity<MyPageResponse> getMyPage(@PathVariable Long userId) {
+        return ResponseEntity.ok(myPageService.getMyPageInfo(userId));
     }
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 /**
- * 사용자 엔티티 (ERD 기준 변수명 동기화 완료)
+ * 사용자 엔티티
  */
 @Entity
 @Getter
@@ -36,12 +36,15 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String nickname;
 
+    @Column(length = 255)
+    private String bio;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private UserRole role;
 
     @Builder
-    public User(String email, String password, String nickname, UserRole role) {
+    public User(String email, String password, String nickname, UserRole role, String bio) {
         Assert.hasText(email, "email must not be empty");
         Assert.hasText(password, "password must not be empty");
         Assert.hasText(nickname, "nickname must not be empty");
@@ -50,17 +53,30 @@ public class User extends BaseEntity {
         this.password = password;
         this.nickname = nickname;
         this.role = (role != null) ? role : UserRole.USER;
+        this.bio = bio;
     }
 
-    // 서비스 로직: 닉네임 변경
+
+    /**
+     * 닉네임 변경
+     */
     public void changeNickname(String nickname) {
         Assert.hasText(nickname, "nickname must not be empty");
         this.nickname = nickname;
     }
 
-    // 서비스 로직: 비밀번호 변경
+    /**
+     * 비밀번호 변경
+     */
     public void changePassword(String encodedPassword) {
         Assert.hasText(encodedPassword, "password must not be empty");
         this.password = encodedPassword;
+    }
+
+    /**
+     * 자기소개 업데이트
+     */
+    public void updateBio(String bio) {
+        this.bio = bio;
     }
 }

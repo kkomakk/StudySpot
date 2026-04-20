@@ -41,17 +41,17 @@ public class FavoriteService {
     }
 
     @Transactional
-    public String toggleFavorite(Long userId, Long placeId) {
-        return favoriteRepository.findByUserIdAndPlaceId(userId, placeId)
+    public String toggleFavorite(Long userId, String externalId) { // placeId 대신 externalId(String) 사용
+        Place place = placeRepository.findByExternalId(externalId)
+                .orElseThrow(() -> new IllegalArgumentException("장소를 먼저 상세 조회해주세요."));
+
+        return favoriteRepository.findByUserIdAndPlaceId(userId, place.getId())
                 .map(favorite -> {
                     favoriteRepository.delete(favorite);
                     return "deleted";
                 })
                 .orElseGet(() -> {
-                    User user = userRepository.findById(userId)
-                            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-                    Place place = placeRepository.findById(placeId)
-                            .orElseThrow(() -> new IllegalArgumentException("장소를 찾을 수 없습니다."));
+                    User user = userRepository.findById(userId).orElseThrow();
                     favoriteRepository.save(Favorite.builder().user(user).place(place).build());
                     return "added";
                 });

@@ -21,9 +21,27 @@ public class ReviewController {
         return reviewService.createReview(requestDto);
     }
 
-    // 리뷰 목록 조회 API (GET)
+    // 리뷰 전체 목록 조회 API (GET)
     @GetMapping
     public List<Review> getAllReviews() {
         return reviewService.getAllReviews();
+    }
+
+    // 특정 유저의 리뷰 총 개수 조회 API (GET)
+    @GetMapping("/user/{userId}/count")
+    public long getUserReviewCount(@PathVariable Long userId) {
+        return reviewService.getUserReviewCount(userId);
+    }
+
+    // 특정 유저의 리뷰 목록 최신순 조회 API (GET)
+    @GetMapping("/user/{userId}")
+    public List<Review> getUserReviews(@PathVariable Long userId) {
+        return reviewService.getUserReviews(userId);
+    }
+
+    // 특정 장소(카카오맵 ID)의 리뷰 목록 최신순 조회 API (GET)
+    @GetMapping("/place/{externalId}")
+    public List<Review> getPlaceReviews(@PathVariable String externalId) {
+        return reviewService.getPlaceReviews(externalId);
     }
 }

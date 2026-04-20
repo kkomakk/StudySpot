@@ -8,6 +8,8 @@ import lombok.Setter;
 public class ReviewRequestDto {
     private Long userId;
     private Long placeId;
+    private String placeName;
+    private String placeAddress;
     private String content;
     private Integer rating;
 }

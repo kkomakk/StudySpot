@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
+    // 카카오맵 ID(externalId)로 장소를 찾는 메서드
     Optional<Place> findByExternalId(String externalId);
 
     // 카테고리별 장소 검색
@@ -13,4 +14,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     // 특정 태그를 포함하는 장소 검색
     List<Place> findAllByTagsContaining(String tag);
+
+
 }
