@@ -14,7 +14,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     // 즐겨찾기 목록 조회
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId:[0-9]+}")
     public ResponseEntity<List<FavoriteResponse>> getUserFavorites(@PathVariable Long userId) {
         return ResponseEntity.ok(favoriteService.getUserFavorites(userId));
     }

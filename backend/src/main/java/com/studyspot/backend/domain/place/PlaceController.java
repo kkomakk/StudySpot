@@ -6,7 +6,6 @@ import com.studyspot.backend.domain.place.dto.PlaceSearchCondition;
 import com.studyspot.backend.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import com.studyspot.backend.external.placeapi.dto.ExternalPlaceDto;
 
 import java.util.List;
 
@@ -70,7 +69,7 @@ public class PlaceController {
 
     // 내 위치 주변 검색 요청을 받는 API
     @GetMapping("/nearby")
-    public ApiResponse<List<ExternalPlaceDto>> getNearbyPlaces(
+    public ApiResponse<List<PlaceResponse>> getNearbyPlaces(
             @RequestParam(defaultValue = "스터디룸") String keyword,
             @RequestParam Double lat,
             @RequestParam Double lng,

@@ -141,7 +141,15 @@ public class PlaceService {
     /**
      * 카카오 API를 통해 내 주변 장소 검색
      */
-    public List<ExternalPlaceDto> getNearbyPlacesFromKakao(String keyword, Double lat, Double lng, int radius) {
-        return placeApiClient.searchPlacesByKeyword(keyword, lat, lng, radius);
+    public List<PlaceResponse> getNearbyPlacesFromKakao(String keyword, Double lat, Double lng, int radius) {
+        // 1. 카카오 API에서 실시간 장소 목록 가져오기
+        List<ExternalPlaceDto> externalPlaces = placeApiClient.searchPlacesByKeyword(keyword, lat, lng, radius);
+
+        // 2. 검색 결과와 DB 데이터 병합
+        return externalPlaces.stream()
+                .map(ext -> placeRepository.findByExternalId(ext.externalId())
+                        .map(dbPlace -> new PlaceResponse(ext, dbPlace.getAverageRating(), dbPlace.getReviewCount()))
+                        .orElseGet(() -> new PlaceResponse(ext, 0.0, 0)))
+                .collect(Collectors.toList());
     }
 }

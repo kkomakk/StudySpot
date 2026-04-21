@@ -76,6 +76,21 @@ public class Place extends BaseEntity {
         if (tags != null) this.tags = tags;
     }
 
+    public void decreaseStatistics(Integer deletedRating) {
+        if (this.reviewCount <= 0) return;
+
+        double totalRating = (this.averageRating * this.reviewCount) - deletedRating;
+
+        this.reviewCount--;
+
+        if (this.reviewCount > 0) {
+            this.averageRating = Math.round((totalRating / this.reviewCount) * 10.0) / 10.0;
+        } else {
+            this.averageRating = 0.0;
+        }
+    }
+
+
     public void updateStatistics(Integer newRating) {
         double totalRating = (this.averageRating * this.reviewCount) + newRating;
 
@@ -83,6 +98,15 @@ public class Place extends BaseEntity {
 
         this.averageRating = Math.round((totalRating / this.reviewCount) * 10.0) / 10.0;
     }
+
+    public void updateReviewRating(Integer oldRating, Integer newRating) {
+        if (this.reviewCount <= 0) return;
+
+        double totalRatingSum = (this.averageRating * this.reviewCount) - oldRating + newRating;
+
+        this.averageRating = Math.round((totalRatingSum / this.reviewCount) * 10.0) / 10.0;
+    }
+
 
     public void updateCongestion(Integer congestion) {
         this.currentCongestion = congestion;

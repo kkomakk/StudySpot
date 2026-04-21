@@ -16,15 +16,25 @@ public class MyPageService {
     private final ReviewRepository reviewRepository;
     private final FavoriteRepository favoriteRepository;
 
+    // 1. 이메일로 조회
+    @Transactional(readOnly = true)
+    public MyPageResponse getMyPageInfoByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return getMyPageInfo(user.getId());
+    }
+
+    // 2. ID로 조회
     @Transactional(readOnly = true)
     public MyPageResponse getMyPageInfo(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. ID: " + userId));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         long reviewCount = reviewRepository.countByUserId(userId);
         long favoriteCount = favoriteRepository.countByUserId(userId);
 
         return MyPageResponse.builder()
+                .userId(user.getId())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .bio(user.getBio())
