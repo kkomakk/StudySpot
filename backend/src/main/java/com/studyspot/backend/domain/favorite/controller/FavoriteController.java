@@ -14,7 +14,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     // 즐겨찾기 목록 조회
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId:[0-9]+}")
     public ResponseEntity<List<FavoriteResponse>> getUserFavorites(@PathVariable Long userId) {
         return ResponseEntity.ok(favoriteService.getUserFavorites(userId));
     }
@@ -27,7 +27,7 @@ public class FavoriteController {
 
     // 찜하기/취소 토글
     @PostMapping("/toggle")
-    public ResponseEntity<String> toggleFavorite(@RequestParam Long userId, @RequestParam Long placeId) {
+    public ResponseEntity<String> toggleFavorite(@RequestParam Long userId, @RequestParam String placeId) {
         return ResponseEntity.ok(favoriteService.toggleFavorite(userId, placeId));
     }
 }
