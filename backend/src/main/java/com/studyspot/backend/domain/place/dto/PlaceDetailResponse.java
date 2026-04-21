@@ -1,6 +1,6 @@
 package com.studyspot.backend.domain.place.dto;
 
-import com.studyspot.backend.domain.place.Place;
+import com.studyspot.backend.domain.place.entity.Place;
 import lombok.Getter;
 import java.util.List;
 

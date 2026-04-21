@@ -1,4 +1,4 @@
-package com.studyspot.backend.domain.place;
+package com.studyspot.backend.domain.place.entity;
 
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
@@ -105,10 +105,5 @@ public class Place extends BaseEntity {
         double totalRatingSum = (this.averageRating * this.reviewCount) - oldRating + newRating;
 
         this.averageRating = Math.round((totalRatingSum / this.reviewCount) * 10.0) / 10.0;
-    }
-
-
-    public void updateCongestion(Integer congestion) {
-        this.currentCongestion = congestion;
     }
 }

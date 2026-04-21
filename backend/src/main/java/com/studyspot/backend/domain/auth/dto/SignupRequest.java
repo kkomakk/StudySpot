@@ -1,6 +1,6 @@
 package com.studyspot.backend.domain.auth.dto;
 
-import com.studyspot.backend.domain.user.User;
+import com.studyspot.backend.domain.user.entity.User;
 import com.studyspot.backend.domain.user.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

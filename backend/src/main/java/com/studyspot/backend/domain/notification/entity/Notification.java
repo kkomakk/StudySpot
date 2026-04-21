@@ -1,6 +1,6 @@
 package com.studyspot.backend.domain.notification.entity;
 
-import com.studyspot.backend.domain.user.User;
+import com.studyspot.backend.domain.user.entity.User;
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
