@@ -29,6 +29,7 @@ public class FavoriteService {
                         .placeId(f.getPlace().getId())
                         .placeName(f.getPlace().getName())
                         .address(f.getPlace().getRoadAddress())
+                        .externalId(f.getPlace().getExternalId())
                         .createdAt(f.getCreatedAt())
                         .build())
                 .collect(Collectors.toList());
@@ -41,7 +42,7 @@ public class FavoriteService {
     }
 
     @Transactional
-    public String toggleFavorite(Long userId, String externalId) { // placeId 대신 externalId(String) 사용
+    public String toggleFavorite(Long userId, String externalId) {
         Place place = placeRepository.findByExternalId(externalId)
                 .orElseThrow(() -> new IllegalArgumentException("장소를 먼저 상세 조회해주세요."));
 
