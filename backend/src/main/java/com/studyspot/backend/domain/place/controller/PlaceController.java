@@ -1,5 +1,6 @@
-package com.studyspot.backend.domain.place;
+package com.studyspot.backend.domain.place.controller;
 
+import com.studyspot.backend.domain.place.service.PlaceService;
 import com.studyspot.backend.domain.place.dto.PlaceDetailResponse;
 import com.studyspot.backend.domain.place.dto.PlaceResponse;
 import com.studyspot.backend.domain.place.dto.PlaceSearchCondition;

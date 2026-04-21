@@ -1,7 +1,7 @@
 package com.studyspot.backend.domain.recommendation;
 
-import com.studyspot.backend.domain.place.Place;
-import com.studyspot.backend.domain.place.PlaceRepository;
+import com.studyspot.backend.domain.place.entity.Place;
+import com.studyspot.backend.domain.place.repository.PlaceRepository;
 import com.studyspot.backend.domain.recommendation.dto.RecommendationRequest;
 import com.studyspot.backend.domain.recommendation.dto.RecommendationResponse;
 import lombok.RequiredArgsConstructor;

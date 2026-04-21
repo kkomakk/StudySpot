@@ -1,6 +1,6 @@
 package com.studyspot.backend.domain.recommendation;
 
-import com.studyspot.backend.domain.place.Place;
+import com.studyspot.backend.domain.place.entity.Place;
 import com.studyspot.backend.domain.recommendation.dto.RecommendationRequest;
 import org.springframework.stereotype.Component;
 

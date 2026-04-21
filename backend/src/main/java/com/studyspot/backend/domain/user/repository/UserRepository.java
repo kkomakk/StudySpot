@@ -1,5 +1,6 @@
-package com.studyspot.backend.domain.user;
+package com.studyspot.backend.domain.user.repository;
 
+import com.studyspot.backend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

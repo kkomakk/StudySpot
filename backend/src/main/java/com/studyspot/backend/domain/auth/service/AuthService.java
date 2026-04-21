@@ -1,9 +1,9 @@
-package com.studyspot.backend.domain.auth;
+package com.studyspot.backend.domain.auth.service;
 
 import com.studyspot.backend.domain.auth.dto.*;
 import com.studyspot.backend.domain.auth.jwt.JwtProvider;
-import com.studyspot.backend.domain.user.User;
-import com.studyspot.backend.domain.user.UserRepository;
+import com.studyspot.backend.domain.user.entity.User;
+import com.studyspot.backend.domain.user.repository.UserRepository;
 import com.studyspot.backend.global.exception.CustomException;
 import com.studyspot.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

@@ -12,6 +12,7 @@ public class FavoriteResponse {
     private Long id;
     private Long placeId;
     private String placeName;
+    private String externalId;
     private String address;
     private LocalDateTime createdAt;
 }

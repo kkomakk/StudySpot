@@ -1,7 +1,7 @@
 package com.studyspot.backend.domain.review.entity;
 
-import com.studyspot.backend.domain.place.Place;
-import com.studyspot.backend.domain.user.User;
+import com.studyspot.backend.domain.place.entity.Place;
+import com.studyspot.backend.domain.user.entity.User;
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

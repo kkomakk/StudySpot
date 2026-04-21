@@ -1,8 +1,10 @@
-package com.studyspot.backend.domain.place;
+package com.studyspot.backend.domain.place.service;
 
+import com.studyspot.backend.domain.place.repository.PlaceRepository;
 import com.studyspot.backend.domain.place.dto.PlaceDetailResponse;
 import com.studyspot.backend.domain.place.dto.PlaceResponse;
 import com.studyspot.backend.domain.place.dto.PlaceSearchCondition;
+import com.studyspot.backend.domain.place.entity.Place;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

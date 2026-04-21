@@ -3,10 +3,10 @@ package com.studyspot.backend.domain.favorite.service;
 import com.studyspot.backend.domain.favorite.dto.FavoriteResponse;
 import com.studyspot.backend.domain.favorite.entity.Favorite;
 import com.studyspot.backend.domain.favorite.repository.FavoriteRepository;
-import com.studyspot.backend.domain.place.Place;
-import com.studyspot.backend.domain.place.PlaceRepository;
-import com.studyspot.backend.domain.user.User;
-import com.studyspot.backend.domain.user.UserRepository;
+import com.studyspot.backend.domain.place.entity.Place;
+import com.studyspot.backend.domain.place.repository.PlaceRepository;
+import com.studyspot.backend.domain.user.entity.User;
+import com.studyspot.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,7 @@ public class FavoriteService {
                         .placeId(f.getPlace().getId())
                         .placeName(f.getPlace().getName())
                         .address(f.getPlace().getRoadAddress())
+                        .externalId(f.getPlace().getExternalId())
                         .createdAt(f.getCreatedAt())
                         .build())
                 .collect(Collectors.toList());
@@ -41,7 +42,7 @@ public class FavoriteService {
     }
 
     @Transactional
-    public String toggleFavorite(Long userId, String externalId) { // placeId 대신 externalId(String) 사용
+    public String toggleFavorite(Long userId, String externalId) {
         Place place = placeRepository.findByExternalId(externalId)
                 .orElseThrow(() -> new IllegalArgumentException("장소를 먼저 상세 조회해주세요."));
 

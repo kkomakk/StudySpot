@@ -1,5 +1,6 @@
-package com.studyspot.backend.domain.auth;
+package com.studyspot.backend.domain.auth.controller;
 
+import com.studyspot.backend.domain.auth.service.AuthService;
 import com.studyspot.backend.domain.auth.dto.*;
 import com.studyspot.backend.global.response.ApiResponse;
 import jakarta.validation.Valid;

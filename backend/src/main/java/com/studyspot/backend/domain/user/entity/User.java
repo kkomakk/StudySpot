@@ -1,5 +1,6 @@
-package com.studyspot.backend.domain.user;
+package com.studyspot.backend.domain.user.entity;
 
+import com.studyspot.backend.domain.user.UserRole;
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,9 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
-/**
- * 사용자 엔티티
- */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,7 +25,7 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String email;
 
     @Column(nullable = false, length = 255)
@@ -56,26 +54,24 @@ public class User extends BaseEntity {
         this.bio = bio;
     }
 
-
     /**
-     * 닉네임 변경
+     * 아이디(이메일) 변경
      */
+    public void changeEmail(String email) {
+        Assert.hasText(email, "email must not be empty");
+        this.email = email;
+    }
+
     public void changeNickname(String nickname) {
         Assert.hasText(nickname, "nickname must not be empty");
         this.nickname = nickname;
     }
 
-    /**
-     * 비밀번호 변경
-     */
     public void changePassword(String encodedPassword) {
         Assert.hasText(encodedPassword, "password must not be empty");
         this.password = encodedPassword;
     }
 
-    /**
-     * 자기소개 업데이트
-     */
     public void updateBio(String bio) {
         this.bio = bio;
     }
