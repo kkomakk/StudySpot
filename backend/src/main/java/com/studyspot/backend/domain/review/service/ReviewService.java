@@ -33,6 +33,7 @@ public class ReviewService {
                             .externalId(requestDto.getExternalId())
                             .name(requestDto.getName())
                             .address(requestDto.getAddress())
+                            .category(requestDto.getCategory())
                             .reviewCount(0)
                             .averageRating(0.0)
                             .build();

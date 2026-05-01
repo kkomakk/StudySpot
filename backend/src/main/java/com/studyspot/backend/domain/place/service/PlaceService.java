@@ -89,17 +89,20 @@ public class PlaceService {
      * 5. 복합 조건 검색
      */
     public List<PlaceResponse> searchByCondition(PlaceSearchCondition condition) {
-        return placeRepository.findAll().stream()
-                .filter(place -> filterByCategory(place, condition.getCategory()))
+        List<Place> places = placeRepository.findByCondition(
+                condition.getCategory(),
+                condition.getMinRating(),
+                condition.getMaxCongestion()
+        );
+
+        return places.stream()
                 .filter(place -> filterByTag(place, condition.getTag()))
-                .filter(place -> filterByRating(place, condition.getMinRating()))
-                .filter(place -> filterByCongestion(place, condition.getMaxCongestion()))
                 .map(PlaceResponse::new)
                 .collect(Collectors.toList());
     }
 
     /**
-     * 카카오 API 검색 결과가 없을 때 실행되는 임시 저장 로직
+     * 6. 카카오 API 검색 결과가 없을 때 실행되는 임시 저장 로직
      */
     private PlaceDetailResponse saveTemporaryPlace(String externalId, String name, Double lat, Double lon) {
         Place newPlace = Place.builder()
@@ -120,28 +123,14 @@ public class PlaceService {
         return new PlaceDetailResponse(placeRepository.save(newPlace));
     }
 
-    private boolean filterByCategory(Place place, String category) {
-        if (!StringUtils.hasText(category)) return true;
-        return place.getCategory() != null && place.getCategory().equalsIgnoreCase(category);
-    }
-
     private boolean filterByTag(Place place, String tag) {
         if (!StringUtils.hasText(tag)) return true;
         return place.getTags().contains(tag);
     }
 
-    private boolean filterByRating(Place place, Double minRating) {
-        if (minRating == null) return true;
-        return place.getAverageRating() >= minRating;
-    }
-
-    private boolean filterByCongestion(Place place, Integer maxCongestion) {
-        if (maxCongestion == null) return true;
-        return place.getCurrentCongestion() <= maxCongestion;
-    }
 
     /**
-     * 카카오 API를 통해 내 주변 장소 검색
+     * 7. 카카오 API를 통해 내 주변 장소 검색
      */
     public List<PlaceResponse> getNearbyPlacesFromKakao(String keyword, Double lat, Double lng, int radius) {
         // 1. 카카오 API에서 실시간 장소 목록 가져오기
