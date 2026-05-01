@@ -1,6 +1,8 @@
 package com.studyspot.backend.domain.user.entity;
 
 import com.studyspot.backend.domain.user.UserRole;
+import com.studyspot.backend.domain.review.entity.Review;
+import com.studyspot.backend.domain.favorite.entity.Favorite;
 import com.studyspot.backend.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,6 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -40,6 +45,14 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private UserRole role;
+
+    // 회원이 삭제될 때 작성한 리뷰도 함께 삭제
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+
+    // 회원이 삭제될 때 즐겨찾기 목록도 함께 삭제
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
 
     @Builder
     public User(String email, String password, String nickname, UserRole role, String bio) {

@@ -15,6 +15,7 @@ public class ReviewRequestDto {
     private Integer rating;
     private String name;
     private String address;
+    private String category;
 
     public ReviewRequestDto(Long userId, String externalId, String content, int rating) {
         this.userId = userId;
