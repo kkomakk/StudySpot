@@ -1,6 +1,7 @@
 package com.studyspot.backend.domain.place.controller;
 
 import com.studyspot.backend.domain.place.service.PlaceService;
+import com.studyspot.backend.domain.place.service.PlaceViewService;
 import com.studyspot.backend.domain.place.dto.PlaceDetailResponse;
 import com.studyspot.backend.domain.place.dto.PlaceResponse;
 import com.studyspot.backend.domain.place.dto.PlaceSearchCondition;
@@ -10,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * StudySpot 장소 API 컨트롤러
- */
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
@@ -20,6 +18,7 @@ import java.util.List;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final PlaceViewService placeViewService;
 
     /**
      * 1. 전체 목록 조회
@@ -34,7 +33,6 @@ public class PlaceController {
      */
     @GetMapping("/{id}")
     public ApiResponse<PlaceDetailResponse> getPlaceDetail(
-
             @PathVariable String id,
             @RequestParam String name,
             @RequestParam Double lat,
@@ -80,6 +78,32 @@ public class PlaceController {
                 "주변 스터디룸 검색 성공",
                 placeService.getNearbyPlacesFromKakao(keyword, lat, lng, radius)
         );
+    }
+
+    /**
+     * 6. 특정 장소 시청자 수 업데이트 및 조회
+     */
+    @PostMapping("/{placeId}/viewing")
+    public ApiResponse<Integer> updateViewingCount(
+            @PathVariable Long placeId,
+            @RequestParam String sessionId) {
+
+        placeViewService.addViewer(placeId, sessionId);
+        int currentViewers = placeViewService.getViewerCount(placeId);
+
+        return ApiResponse.ok("시청자 수 업데이트 성공", currentViewers);
+    }
+
+    /**
+     * 7. 특정 장소 시청자 수 즉시 차감
+     */
+    @PostMapping("/{placeId}/viewing/leave")
+    public ApiResponse<Void> removeViewingCount(
+            @PathVariable Long placeId,
+            @RequestParam String sessionId) {
+
+        placeViewService.removeViewer(placeId, sessionId);
+        return ApiResponse.ok("시청자 수 차감 성공", null);
     }
 
 }
